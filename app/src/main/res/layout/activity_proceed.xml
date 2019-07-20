@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProceedActivity"
+    android:background="@color/start_bg">
+    <LinearLayout
+        android:background="@color/start_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/button_sec"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:id="@+id/lean">
+
+        <ImageView
+            android:layout_width="439dp"
+            android:layout_height="300dp"
+            android:src="@drawable/logonew" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="sans-serif-smallcaps"
+            android:textSize="22sp"
+            android:text="This is a IoT based smart attendance system "
+            />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/button_sec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_graphics"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/pass"
+            android:layout_margin="20dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/button"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/bottom_graphics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/logo2" />
+
+
+
+
+</RelativeLayout>

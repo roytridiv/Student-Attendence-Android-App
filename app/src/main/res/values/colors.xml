@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#000</color>
+    <color name="green_dark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="start_bg">#ffffff</color>
+    <color name="light_black">#11000011</color>
+    <color name="test_white">#fff</color>
+    <color name="no_color">#99141414</color>
+
+    <color name="regButton">#26A69A</color>
+    <color name="loginButton">#EC407A</color>
+
+    <color name="baseColor">#C62828</color>
+    <color name="white">#FFFFFF</color>
+    <color name="button_dark">#3A2E39</color>
+    <color name="button_light">#E9E9E9</color>
+    <color name="dark">#3A2E39</color>
+    <color name="green_button">#4CAF50</color>
+    <color name="button_pressed">#358A39</color>
+    <color name="light_gray">#d3d3d3</color>
+
+    <color name="card1">#85C6E5</color>
+    <color name="card2">#E3B36F</color>
+    <color name="card3">#86E5B2</color>
+    <color name="card4">#E88595</color>
+    <color name="card5">#404C70</color>
+    <color name="card6">#ffab91</color>
+
+    <color name="materials">#097896</color>
+    <color name="card2d">#e3b36f</color>
+    <color name="card3d">#4bb28d</color>
+    <color name="card4d">#b7447e</color>
+    <color name="principal">#404c70</color>
+    <color name="card6d">#e88595</color>
+    <color name="card1_pressed">#05495b</color>
+    <color name="bg_bluish">#E4E9EF</color>
+
+    <color name="attendance">#42A5F5</color>
+    <color name="routine"></color>
+    <color name="result"></color>
+    <color name="teacher_information">#E57373</color>
+
+</resources>

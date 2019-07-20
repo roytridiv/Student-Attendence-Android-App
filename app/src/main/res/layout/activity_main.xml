@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StartActivity"
+    android:background="@color/start_bg">
+
+    <LinearLayout
+        android:background="@color/start_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_graphics"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="439dp"
+            android:layout_height="384dp"
+            android:src="@drawable/logonew" />
+        <ProgressBar
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="40dp"
+           />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="sans-serif-smallcaps"
+            android:textSize="22sp"
+            android:text="@string/welcome_msg"
+           />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/bottom_graphics"
+        android:layout_width="match_parent"
+        android:layout_height="181dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-7dp"
+        android:src="@drawable/logo2" />
+
+
+
+
+</RelativeLayout>
