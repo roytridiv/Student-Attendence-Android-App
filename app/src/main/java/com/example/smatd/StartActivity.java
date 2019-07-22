@@ -1,7 +1,7 @@
 package com.example.smatd;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class StartActivity extends AppCompatActivity {
@@ -16,7 +16,7 @@ public class StartActivity extends AppCompatActivity {
             public void run() {
                 try {
                     super.run();
-                    sleep(5000);
+                    sleep(2000);
                 } catch (Exception ignored) {
                 } finally {
                     Intent intent = new Intent(StartActivity.this, ProceedActivity.class);

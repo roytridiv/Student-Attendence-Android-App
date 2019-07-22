@@ -1,10 +1,13 @@
 package com.example.smatd;
 
+import androidx.annotation.NonNull;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitClient {
-    private static  final String BASE_URL = "https://tridivroy.xyz/login/api/";
+class RetrofitClient {
+
+    private static  final String BASE_URL = "http://tridivroy.xyz/smatd/v1/public/api/";
 
     private static RetrofitClient mInstance;
 
@@ -17,14 +20,15 @@ public class RetrofitClient {
                 .build();
     }
 
-    public static synchronized RetrofitClient getInstance(){
+    @NonNull
+    static synchronized RetrofitClient getInstance(){
         if(mInstance == null){
             mInstance = new RetrofitClient();
         }
         return mInstance;
     }
 
-    public API getApi(){
+    API getApi(){
         return retrofit.create(API.class);
     }
 }

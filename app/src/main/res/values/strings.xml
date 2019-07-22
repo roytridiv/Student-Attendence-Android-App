@@ -16,4 +16,6 @@
     <string name="pref_user_email">com.abc.preference_user_name</string>
     <string name="title_activity_result">Result</string>
 
+    <string name="default_notification_channel_id">HAJIRA_NOTIFICATION_CHANNEL</string>
+    <string name="default_notification_channel_name">HAJIRA_NOTIFICATION</string>
 </resources>

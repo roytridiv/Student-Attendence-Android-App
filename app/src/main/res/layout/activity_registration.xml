@@ -42,7 +42,7 @@
                 android:fontFamily="sans-serif-black"
                 android:textSize="20sp"/>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_rfid_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,11 +63,11 @@
                     android:textSize="16sp"
                     tools:ignore="Autofill">
                 </EditText>
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
 
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_mobile_id"
                 android:visibility="visible"
                 android:layout_width="match_parent"
@@ -88,9 +88,9 @@
                     android:fontFamily="sans-serif-light"
                     android:textSize="16sp"
                     tools:ignore="Autofill" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_password_id"
                 android:visibility="gone"
                 android:layout_width="match_parent"
@@ -110,8 +110,8 @@
                     android:fontFamily="sans-serif-light"
                     android:textSize="16sp"
                     tools:ignore="Autofill" />
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_confirm_password_id"
                 android:visibility="gone"
                 android:layout_width="match_parent"
@@ -131,7 +131,7 @@
                     android:fontFamily="sans-serif-light"
                     android:textSize="16sp"
                     tools:ignore="Autofill" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:id="@+id/input_check_button"
@@ -141,7 +141,7 @@
                 android:orientation="vertical"
                 android:gravity="center"
                 android:layout_margin="40dp">
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:id="@+id/register_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -159,7 +159,7 @@
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
                         android:textColor="@color/test_white"/>
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
 
@@ -171,7 +171,7 @@
                 android:orientation="vertical"
                 android:gravity="center"
                 android:layout_margin="40dp">
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:id="@+id/set_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -189,7 +189,7 @@
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
                         android:textColor="@color/test_white"/>
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
             <TextView

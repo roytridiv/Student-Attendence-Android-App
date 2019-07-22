@@ -4,14 +4,16 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.material.textfield.TextInputLayout;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,25 +38,23 @@ import retrofit2.Response;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    TextView haveAccount , checkin , set_pass;
-    EditText id , number , password , con_pass ;
+    TextView haveAccount, checkin, set_pass;
+    EditText id, number, password, con_pass;
 
     String DEVICE_TOKEN = "abcdefg";
-   // Button checkin ;
-
-
-
+    // Button checking
 
     String test_token1 = "a123b";
     String test_number1 = "01680541229";
     String test_token2 = "abc";
     String test_number2 = "123456";
-    String test_password= "";
+    String test_password = "";
     String corfirm_password = "";
 
-    TextInputLayout inputRfid , inputNumber , inputPassword , inputConfirmPassword ;
-    LinearLayout inputcheckButton , inputPasswordButton ;
+    String input_rfid, input_mobile, status, staus_code, msg , input_password , input_password_confirm;
 
+    TextInputLayout inputRfid, inputNumber, inputPassword, inputConfirmPassword;
+    LinearLayout inputcheckButton, inputPasswordButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,16 +76,10 @@ public class RegistrationActivity extends AppCompatActivity {
         inputPasswordButton = findViewById(R.id.input_password_button);
 
 
-
-
         id = findViewById(R.id.rfid_id);
         number = findViewById(R.id.phone);
         password = findViewById(R.id.new_password);
         con_pass = findViewById(R.id.confirm_password);
-
-        //fetch device token//
-
-        getDeviceToken();
 
         /* if id and phone no. exits
            the user will be asked for password to login
@@ -95,7 +90,7 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(id.getText().toString().equals("") || number.getText().toString().equals("")){
+                if (id.getText().toString().equals("") || number.getText().toString().equals("")) {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RegistrationActivity.this);
                     alertDialogBuilder.setTitle("Login Error");
                     alertDialogBuilder.setMessage("Please fill up the required fields to login.");
@@ -107,25 +102,98 @@ public class RegistrationActivity extends AppCompatActivity {
                     alertDialogBuilder.setCancelable(false);
                     AlertDialog alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
-                }else {
+                } else {
+
+                    Log.d("MY_APP" , "...........dhukse............");
+
+                    input_rfid = id.getText().toString();
+                    input_mobile = number.getText().toString();
+
+
+
+                    Call<ResponseBody> call = RetrofitClient
+                            .getInstance()
+                            .getApi()
+                            .check(input_rfid, input_mobile);
+
                     final ProgressDialog progressDialog = new ProgressDialog(RegistrationActivity.this);
                     progressDialog.setCancelable(false);
                     progressDialog.setMessage("Processing request...");
                     progressDialog.show();
 
-                    Call<ResponseBody> call = RetrofitClient
-                            .getInstance()
-                            .getApi()
-                            .check(id.getText().toString(), password.getText().toString());
 
                     call.enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             String resp = null;
                             try {
-                                resp = response.body().string();
+
+                                if (response.body() != null){
+                                    resp = response.body().string();
+                                    progressDialog.dismiss();
+                                   // Log.d("MY_APP" , "json data : "+ resp);
+                                }else{
+                                    Log.d("MY_APP" , " kisu hoitase naki ");
+                                }
+
+
+                                Log.d("MY_APP" , "json data : "+ resp);
+
+
+
                                 try {
+                                    //JSONArray jsonArray = new JSONArray(resp);
                                     JSONObject jsonObject = new JSONObject(resp);
+
+                                    JSONObject jsonObject1 = jsonObject.getJSONObject("Status");
+                                    //JSONObject jsonObject2 = jsonObject1.getJSONObject("Status_Code");
+
+                                   staus_code = jsonObject1.getString("Status_Code");
+
+
+                                    if(staus_code.equals("999")){
+
+                                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RegistrationActivity.this);
+                                        alertDialogBuilder.setTitle("Login Error");
+                                        alertDialogBuilder.setMessage("No user found with this RFID");
+                                        alertDialogBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                            }
+                                        });
+                                        alertDialogBuilder.setCancelable(false);
+                                        AlertDialog alertDialog = alertDialogBuilder.create();
+                                        alertDialog.show();
+
+
+
+                                    }else if(staus_code.equals("101")){
+
+                                        inputRfid.setVisibility(View.GONE);
+                                        inputNumber.setVisibility(View.GONE);
+                                        inputcheckButton.setVisibility(View.GONE);
+
+                                        inputPassword.setVisibility(View.VISIBLE);
+                                        inputConfirmPassword.setVisibility(View.VISIBLE);
+                                        inputPasswordButton.setVisibility(View.VISIBLE);
+
+
+
+                                    }else if(staus_code.equals("102")){
+
+                                        Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                                        intent.putExtra("rfid", input_rfid);
+                                        intent.putExtra("mobile", input_mobile);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                        finish();
+
+                                    }
+
+
+                                    Log.d("MY_APP" , " arraylength " + jsonObject1.toString() );
+                                   Log.d("MY_APP" , " arraylength " + staus_code );
+
 
 
                                 } catch (JSONException e) {
@@ -139,86 +207,201 @@ public class RegistrationActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            Log.d("MY_APP" , "-------------json fail korse---------");
                             progressDialog.dismiss();
                         }
 
-                        Call<ResponseBody> sendToken = RetrofitClient
-                                .getInstance()
-                                .getApi()
-                                .token(DEVICE_TOKEN);
-
                     });
+
+                    Log.d("MY_APP" , "sggsfgsdfg : "+ staus_code );
+
+
+//                    if(staus_code.equals("999")){
+//
+//                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RegistrationActivity.this);
+//                        alertDialogBuilder.setTitle("Login Error");
+//                        alertDialogBuilder.setMessage("No user found with this RFID");
+//                        alertDialogBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int i) {
+//                            }
+//                        });
+//                        alertDialogBuilder.setCancelable(false);
+//                        AlertDialog alertDialog = alertDialogBuilder.create();
+//                        alertDialog.show();
+//
+//
+//
+//                    }else if(staus_code.equals("101")){
+//
+//                        inputRfid.setVisibility(View.GONE);
+//                        inputNumber.setVisibility(View.GONE);
+//                        inputcheckButton.setVisibility(View.GONE);
+//
+//                        inputPassword.setVisibility(View.VISIBLE);
+//                        inputConfirmPassword.setVisibility(View.VISIBLE);
+//                        inputPasswordButton.setVisibility(View.VISIBLE);
+//
+//                    }else if(status == "102"){
+//
+//                        Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        startActivity(intent);
+//                        finish();
+//
+//                    }
+
+
+
                 }
 
-
-
-
-
-                if(id.getText().toString().equals(test_token1) == true && number.getText().toString().equals(test_number1) == true){
-                    if(test_password.equals("")){
-
-                        inputRfid.setVisibility(View.GONE);
-                        inputNumber.setVisibility(View.GONE);
-                        inputcheckButton.setVisibility(View.GONE);
-
-                        inputPassword.setVisibility(View.VISIBLE);
-                        inputConfirmPassword.setVisibility(View.VISIBLE);
-                        inputPasswordButton.setVisibility(View.VISIBLE);
-
-                    }else{
-
-                        Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                        finish();
-
-                    }
-                }else if(id.getText().toString().equals(test_token2) == true && number.getText().toString().equals(test_number2) == true) {
-                    Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
-                }
-                else {
-                    Log.d("MY_APP" , "else e dhukse");
-                }
+//
+//                if (id.getText().toString().equals(test_token1) == true && number.getText().toString().equals(test_number1) == true) {
+//                    if (test_password.equals("")) {
+//
+//                        inputRfid.setVisibility(View.GONE);
+//                        inputNumber.setVisibility(View.GONE);
+//                        inputcheckButton.setVisibility(View.GONE);
+//
+//                        inputPassword.setVisibility(View.VISIBLE);
+//                        inputConfirmPassword.setVisibility(View.VISIBLE);
+//                        inputPasswordButton.setVisibility(View.VISIBLE);
+//
+//                    } else {
+//
+//                        Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        startActivity(intent);
+//                        finish();
+//
+//                    }
+//                } else if (id.getText().toString().equals(test_token2) == true && number.getText().toString().equals(test_number2) == true) {
+//                    Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(intent);
+//                    finish();
+//                } else {
+//                    Log.d("MY_APP", "else e dhukse");
+//                }
 
             }
         });
+
+
 
         set_pass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RegistrationActivity.this, UserDashboard.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
+//                Intent intent = new Intent(RegistrationActivity.this, UserDashboard.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(intent);
+//                finish();
+                input_password = password.getText().toString();
+                input_password_confirm = con_pass.getText().toString();
 
-                Toast.makeText(RegistrationActivity.this , "You have registered to our system successfully " , Toast.LENGTH_LONG);
+                Log.d("MY_APP" , input_rfid  + input_mobile );
+
+                if(input_password.equals(input_password_confirm)){
+
+                    Call<ResponseBody> call = RetrofitClient
+                            .getInstance()
+                            .getApi()
+                            .updatePass(input_rfid , input_mobile  , input_password +" ");
+
+                    final ProgressDialog progressDialog = new ProgressDialog(RegistrationActivity.this);
+                    progressDialog.setCancelable(false);
+                    progressDialog.setMessage("Processing request...");
+                    progressDialog.show();
+
+
+                    call.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            String resp = null;
+                            try {
+
+                                if (response.body() != null){
+                                    resp = response.body().string();
+                                    progressDialog.dismiss();
+                                    // Log.d("MY_APP" , "json data : "+ resp);
+                                }else{
+                                    Log.d("MY_APP" , " kisu hoitase naki ");
+                                }
+
+
+                                Log.d("MY_APP" , "json data : "+ resp);
+
+
+
+                                try {
+                                    //JSONArray jsonArray = new JSONArray(resp);
+                                    JSONObject jsonObject = new JSONObject(resp);
+
+                                    JSONObject jsonObject1 = jsonObject.getJSONObject("Status");
+                                    //JSONObject jsonObject2 = jsonObject1.getJSONObject("Status_Code");
+
+                                    staus_code = jsonObject1.getString("Status_Code");
+
+
+                                    if(staus_code.equals("103")){
+
+                                        Intent intent = new Intent(RegistrationActivity.this, UserDashboard.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                        finish();
+
+                                        Toast.makeText(RegistrationActivity.this, "You have registered to our system successfully ", Toast.LENGTH_LONG).show();
+
+                                    }
+
+
+                                    Log.d("MY_APP" , " arraylength " + jsonObject1.toString() );
+                                    Log.d("MY_APP" , " arraylength " + staus_code );
+
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            Log.d("MY_APP" , "-------------json fail korse---------");
+                            progressDialog.dismiss();
+                        }
+
+                    });
+
+
+
+                }else{
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RegistrationActivity.this);
+                    alertDialogBuilder.setTitle("Password Mismatch");
+                    alertDialogBuilder.setMessage("Please fill up the required fields with similar password.");
+                    alertDialogBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+                    alertDialogBuilder.setCancelable(false);
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+
+                }
+
+
             }
         });
 
 
-
-
-
-
-
-
-
-        haveAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
-
-            }
-        });
     }
 
-    private void getDeviceToken(){
+    private void getDeviceToken() {
         FirebaseApp.initializeApp(RegistrationActivity.this);
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
             @Override
