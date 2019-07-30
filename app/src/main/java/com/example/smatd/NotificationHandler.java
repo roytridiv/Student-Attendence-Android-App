@@ -3,8 +3,10 @@ package com.example.smatd;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.hardware.camera2.CameraAccessException;
@@ -76,6 +78,18 @@ public class NotificationHandler extends FirebaseMessagingService {
     private void sendNotification(String title, String messageBody) {
         long[] mVibratePattern = new long[]{0, 400, 200, 400};
 
+
+
+
+
+        final int min = 0;
+        final int max = 50;
+        final int random = new Random().nextInt((max - min) + 1) + min;
+
+        Intent intent = new Intent(NotificationHandler.this, YourChildPresent.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(NotificationHandler.this, random , intent, PendingIntent.FLAG_ONE_SHOT);
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.applogo)
                 .setLargeIcon(BitmapFactory.decodeResource(NotificationHandler.this.getResources(), R.drawable.applogo))
@@ -86,7 +100,8 @@ public class NotificationHandler extends FirebaseMessagingService {
                 .setVibrate(mVibratePattern)
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(messageBody))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 

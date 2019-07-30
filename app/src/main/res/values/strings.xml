@@ -18,4 +18,15 @@
 
     <string name="default_notification_channel_id">HAJIRA_NOTIFICATION_CHANNEL</string>
     <string name="default_notification_channel_name">HAJIRA_NOTIFICATION</string>
+
+    <string name="day_prompt">Choose a day</string>
+    <string-array name="day_arrays">
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+    </string-array>
+
+
 </resources>

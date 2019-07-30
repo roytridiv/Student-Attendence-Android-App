@@ -1,5 +1,6 @@
 package com.example.smatd;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -11,6 +12,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -44,12 +46,6 @@ public class RegistrationActivity extends AppCompatActivity {
     String DEVICE_TOKEN = "abcdefg";
     // Button checking
 
-    String test_token1 = "a123b";
-    String test_number1 = "01680541229";
-    String test_token2 = "abc";
-    String test_number2 = "123456";
-    String test_password = "";
-    String corfirm_password = "";
 
     String input_rfid, input_mobile, status, staus_code, msg , input_password , input_password_confirm;
 
@@ -61,11 +57,17 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+
+
+        final MyPreferenceManager pref = new MyPreferenceManager(RegistrationActivity.this);
+
+
+
         haveAccount = findViewById(R.id.have_account);
         checkin = findViewById(R.id.regBut);
         set_pass = findViewById(R.id.set_password_button);
 
-        //
+
 
         inputRfid = findViewById(R.id.input_rfid_id);
         inputNumber = findViewById(R.id.input_mobile_id);
@@ -81,11 +83,22 @@ public class RegistrationActivity extends AppCompatActivity {
         password = findViewById(R.id.new_password);
         con_pass = findViewById(R.id.confirm_password);
 
+        if(pref.getLoginStatus()){
+
+            id.setText(pref.getRfid());
+            number.setText(pref.getMobile());
+
+        }
+
+
+
         /* if id and phone no. exits
            the user will be asked for password to login
            else
            he will ne asked to give a new password for registration
          */
+
+
         checkin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,6 +136,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
                     call.enqueue(new Callback<ResponseBody>() {
+                        @SuppressLint("LogConditional")
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             String resp = null;
@@ -169,6 +183,11 @@ public class RegistrationActivity extends AppCompatActivity {
 
                                     }else if(staus_code.equals("101")){
 
+                                        pref.setData(input_rfid , input_mobile);
+                                        pref.setLoginStatus();
+
+
+
                                         inputRfid.setVisibility(View.GONE);
                                         inputNumber.setVisibility(View.GONE);
                                         inputcheckButton.setVisibility(View.GONE);
@@ -180,6 +199,10 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
                                     }else if(staus_code.equals("102")){
+                                        pref.setData(input_rfid , input_mobile);
+                                        pref.setLoginStatus();
+
+
 
                                         Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
                                         intent.putExtra("rfid", input_rfid);
@@ -216,73 +239,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     Log.d("MY_APP" , "sggsfgsdfg : "+ staus_code );
 
 
-//                    if(staus_code.equals("999")){
-//
-//                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RegistrationActivity.this);
-//                        alertDialogBuilder.setTitle("Login Error");
-//                        alertDialogBuilder.setMessage("No user found with this RFID");
-//                        alertDialogBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialogInterface, int i) {
-//                            }
-//                        });
-//                        alertDialogBuilder.setCancelable(false);
-//                        AlertDialog alertDialog = alertDialogBuilder.create();
-//                        alertDialog.show();
-//
-//
-//
-//                    }else if(staus_code.equals("101")){
-//
-//                        inputRfid.setVisibility(View.GONE);
-//                        inputNumber.setVisibility(View.GONE);
-//                        inputcheckButton.setVisibility(View.GONE);
-//
-//                        inputPassword.setVisibility(View.VISIBLE);
-//                        inputConfirmPassword.setVisibility(View.VISIBLE);
-//                        inputPasswordButton.setVisibility(View.VISIBLE);
-//
-//                    }else if(status == "102"){
-//
-//                        Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                        startActivity(intent);
-//                        finish();
-//
-//                    }
-
-
-
                 }
-
-//
-//                if (id.getText().toString().equals(test_token1) == true && number.getText().toString().equals(test_number1) == true) {
-//                    if (test_password.equals("")) {
-//
-//                        inputRfid.setVisibility(View.GONE);
-//                        inputNumber.setVisibility(View.GONE);
-//                        inputcheckButton.setVisibility(View.GONE);
-//
-//                        inputPassword.setVisibility(View.VISIBLE);
-//                        inputConfirmPassword.setVisibility(View.VISIBLE);
-//                        inputPasswordButton.setVisibility(View.VISIBLE);
-//
-//                    } else {
-//
-//                        Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                        startActivity(intent);
-//                        finish();
-//
-//                    }
-//                } else if (id.getText().toString().equals(test_token2) == true && number.getText().toString().equals(test_number2) == true) {
-//                    Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    startActivity(intent);
-//                    finish();
-//                } else {
-//                    Log.d("MY_APP", "else e dhukse");
-//                }
 
             }
         });
@@ -292,12 +249,8 @@ public class RegistrationActivity extends AppCompatActivity {
         set_pass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(RegistrationActivity.this, UserDashboard.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(intent);
-//                finish();
-                input_password = password.getText().toString();
-                input_password_confirm = con_pass.getText().toString();
+                input_password = password.getText().toString().trim();
+                input_password_confirm = con_pass.getText().toString().trim();
 
                 Log.d("MY_APP" , input_rfid  + input_mobile );
 

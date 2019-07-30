@@ -1,5 +1,6 @@
 package com.example.smatd;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -46,12 +47,22 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        final MyPreferenceManager pref = new MyPreferenceManager(LoginActivity.this);
+
+
+
+
         Intent intent = getIntent();
         rfid = intent.getStringExtra("rfid");
         mobile = intent.getStringExtra("mobile");
 
         pass = findViewById(R.id.password);
         loginButton = findViewById(R.id.login_button);
+
+        if(pref.getLoginStatus()){
+            pass.setText(pref.getPass());
+        }
+
 
         getDeviceToken();
 
@@ -90,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                     call.enqueue(new Callback<ResponseBody>() {
+                        @SuppressLint("LogConditional")
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             String resp = null;
@@ -127,7 +139,11 @@ public class LoginActivity extends AppCompatActivity {
                                         AlertDialog alertDialog = alertDialogBuilder.create();
                                         alertDialog.show();
                                     } else if (staus_code.equals("104")) {
+
+                                        pref.setPass(input_password);
+
                                         Intent intent = new Intent(LoginActivity.this, UserDashboard.class);
+                                        intent.putExtra("rfid", rfid);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(intent);
                                         finish();

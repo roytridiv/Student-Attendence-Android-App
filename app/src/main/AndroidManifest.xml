@@ -8,6 +8,7 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
@@ -19,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ForgotPassword"/>
+        <activity android:name=".YourChildPresent"></activity>
+        <activity android:name=".ForgotPassword" />
         <activity android:name=".StudyMaterials" />
         <activity android:name=".PricipalOffice" />
         <activity android:name=".StudentInfoActivity" />
@@ -40,6 +42,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".NotificationHandler"
             android:exported="false">

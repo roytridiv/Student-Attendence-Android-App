@@ -5,6 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".StudyMaterials"
-    android:background="@drawable/uc">
+    android:background="@color/white">
+
+
+
+ <com.google.android.youtube.player.YouTubePlayerView
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:id="@+id/youtubePlay"
+     android:layout_margin="10dp">
+
+ </com.google.android.youtube.player.YouTubePlayerView>
+
+
+  <!--  <View
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        class = "com.google.android.youtube.player.YouTubePlayerView"
+        android:id="@+id/youtubePlay"/> -->
+
+   <!--<Button-->
+        <!--android:id="@+id/playButton"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/youtubePlay"-->
+        <!--android:text="Play"-->
+       <!--android:layout_margin="30dp"-->
+       <!--android:background="@color/card4"-->
+        <!--/>-->
+
+
+    <ImageView
+        android:id="@+id/bottom_graphics"
+        android:layout_width="match_parent"
+        android:layout_height="181dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-7dp"
+        android:src="@drawable/logo2" />
+
+
+
+
 
 </RelativeLayout>

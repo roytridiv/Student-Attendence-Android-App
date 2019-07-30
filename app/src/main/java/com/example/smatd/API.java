@@ -35,4 +35,18 @@ public interface API {
             @Field("mobile") @NonNull String num,
             @Field("password") @NonNull String pass
     );
+
+    @NonNull
+    @FormUrlEncoded
+    @POST("studentInfo")
+    Call<ResponseBody> studentInfo(
+            @Field("rfid") @NonNull String id
+    );
+
+    @NonNull
+    @FormUrlEncoded
+    @POST("attendanceReport")
+    Call<ResponseBody> attendanceReport(
+            @Field("rfid") @NonNull String id
+    );
 }

@@ -13,9 +13,11 @@ class MyPreferenceManager {
     private static final String PREF_NAME = "REGISTER_UI";
     private static final String DEFAULT_STR_RESPONSE = "DN";
     private static final boolean DEFAULT_BOOL_RESPONSE = false;
+    private static final boolean test = false;
 
+    private static final String RFID = "RFID";
     private static final String MOBILE = "MOBILE";
-    private static final String EMAIL = "EMAIL";
+    private static final String PASSWORD = "PASSWORD";
 
     private static final String LOGIN_STATUS = "ISLOGGEDIN";
 
@@ -27,9 +29,14 @@ class MyPreferenceManager {
 
     //=======================Setters=======================
 
-    void setData(String email, String mobile){
-        editor.putString(EMAIL,email);
+    void setData(String rfid, String mobile){
+        editor.putString(RFID,rfid);
         editor.putString(MOBILE,mobile);
+        editor.apply();
+    }
+
+    void setPass(String pass){
+        editor.putString(PASSWORD,pass);
         editor.apply();
     }
 
@@ -44,8 +51,10 @@ class MyPreferenceManager {
         return pref.getBoolean(LOGIN_STATUS,DEFAULT_BOOL_RESPONSE);
     }
 
-    String getEmail() {
-        return pref.getString(EMAIL, DEFAULT_STR_RESPONSE);
+    String getPass(){return  pref.getString(PASSWORD , DEFAULT_STR_RESPONSE);}
+
+    String getRfid() {
+        return pref.getString(RFID, DEFAULT_STR_RESPONSE);
     }
 
     String getMobile() {
