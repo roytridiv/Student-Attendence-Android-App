@@ -19,6 +19,7 @@ import androidx.core.app.ActivityCompat;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.File;
@@ -27,7 +28,7 @@ import java.io.InputStream;
 
 public class UserDashboard extends AppCompatActivity {
 
-
+Button logout_but ;
     CardView attendenceReport ,  classRoutine , termResult , classTeacher , principalOffice , studyMateiral , studentInfo;
 
     String rfid ;
@@ -62,7 +63,12 @@ public class UserDashboard extends AppCompatActivity {
             }
         };
 
-        registerReceiver(broadcastReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+        try{
+            registerReceiver(broadcastReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+        }catch (Exception e){
+
+        }
+
 
         Intent intent = getIntent();
         rfid = intent.getStringExtra("rfid");
@@ -76,6 +82,7 @@ public class UserDashboard extends AppCompatActivity {
         principalOffice = findViewById(R.id.principal_office);
         studyMateiral = findViewById(R.id.study_materials);
         studentInfo = findViewById(R.id.student);
+        logout_but = findViewById(R.id.logout_button);
 
         attendenceReport.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +104,17 @@ public class UserDashboard extends AppCompatActivity {
                 startActivity(intent);
                 finish();
 
+            }
+        });
+
+        logout_but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(UserDashboard.this, RegistrationActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
             }
         });
 

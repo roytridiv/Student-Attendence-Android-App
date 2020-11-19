@@ -34,7 +34,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     EditText pass;
-    TextView loginButton;
+    TextView loginButton , forgot_pass;
     String test_password1 = "000";
 
 
@@ -58,6 +58,8 @@ public class LoginActivity extends AppCompatActivity {
 
         pass = findViewById(R.id.password);
         loginButton = findViewById(R.id.login_button);
+        forgot_pass=findViewById(R.id.new_pass);
+
 
         if(pref.getLoginStatus()){
             pass.setText(pref.getPass());
@@ -167,7 +169,20 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        forgot_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, ForgotPassword.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+
+            }
+        });
     }
+
+
 
     private void getDeviceToken() {
         FirebaseApp.initializeApp(LoginActivity.this);

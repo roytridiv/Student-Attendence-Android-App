@@ -116,7 +116,7 @@
                     android:text="Attendance Report"
                     android:layout_gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:textSize="16dp"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -157,7 +157,7 @@
                     android:text="Class \nRoutine"
                     android:layout_gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:textSize="16dp"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -200,7 +200,7 @@
                     android:text="Term \nResult"
                     android:layout_gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:textSize="16dp"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -283,7 +283,7 @@
                     android:text="Principal's Office"
                     android:layout_gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:textSize="16dp"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -323,7 +323,7 @@
                     android:text="Study \nMaterials"
                     android:layout_gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:textSize="16dp"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -337,7 +337,17 @@
 
     </androidx.gridlayout.widget.GridLayout>
 
-
+<Button
+    android:id="@+id/logout_button"
+    android:background="@color/baseColor"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="18sp"
+    android:textStyle="bold"
+    android:text="Log Out"
+    android:textColor="@color/cardview_light_background"/>
+<!--    android:layout_marginRight="10sp"-->
+<!--    android:layout_marginLeft="10sp"/>-->
 
 
 

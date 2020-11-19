@@ -45,6 +45,11 @@ class MyPreferenceManager {
         editor.apply();
     }
 
+    void removeLoginStatus(){
+        editor.putBoolean(LOGIN_STATUS, false);
+        editor.apply();
+    }
+
     //=======================Getters=======================
 
     boolean getLoginStatus(){

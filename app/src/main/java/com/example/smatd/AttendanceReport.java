@@ -4,9 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -81,7 +84,25 @@ public class AttendanceReport extends AppCompatActivity {
 
                         last_month.setText(jsonObject1.getString("PREVIOUS"));
                         this_month.setText(jsonObject1.getString("CURRENT"));
-                        remarks.setText("GOOD");
+
+                        if(Integer.parseInt(jsonObject1.getString("CURRENT")) > 20 ){
+                            remarks.setText("Excellent");
+                            remarks.setTextColor(Color.GREEN);
+                        }
+                        else if(Integer.parseInt(jsonObject1.getString("CURRENT")) > 12 ){
+                            remarks.setText("Good");
+                            remarks.setTextColor(Color.BLUE);
+                        }
+                        else if(Integer.parseInt(jsonObject1.getString("CURRENT")) > 6 ){
+                            remarks.setText("Average");
+                            remarks.setTextColor(Color.YELLOW);
+                        }
+                        else{
+                            remarks.setText("Bad !");
+                            remarks.setTextColor(Color.RED);
+                        }
+
+//                        Toast.makeText(AttendanceReport.class,"", "", Toast.LENGTH_LONG).show();
 
 
 

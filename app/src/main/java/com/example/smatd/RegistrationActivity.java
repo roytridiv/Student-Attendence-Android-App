@@ -83,11 +83,17 @@ public class RegistrationActivity extends AppCompatActivity {
         password = findViewById(R.id.new_password);
         con_pass = findViewById(R.id.confirm_password);
 
-        if(pref.getLoginStatus()){
 
+        if(pref.getRfid() != null && pref.getMobile() !=  null){
             id.setText(pref.getRfid());
             number.setText(pref.getMobile());
+            pref.removeLoginStatus();
+        }
 
+        if(pref.getLoginStatus()){
+            id.setText(pref.getRfid());
+            number.setText(pref.getMobile());
+            pref.removeLoginStatus();
         }
 
 
@@ -117,7 +123,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     alertDialog.show();
                 } else {
 
-                    Log.d("MY_APP" , "...........dhukse............");
+                    Log.d("MY_APP" , "...........User input dise............");
 
                     input_rfid = id.getText().toString();
                     input_mobile = number.getText().toString();
@@ -164,6 +170,10 @@ public class RegistrationActivity extends AppCompatActivity {
 
                                    staus_code = jsonObject1.getString("Status_Code");
 
+                                    Log.d("MY_APP" , " arraylength " + staus_code );
+
+
+
 
                                     if(staus_code.equals("999")){
 
@@ -173,6 +183,12 @@ public class RegistrationActivity extends AppCompatActivity {
                                         alertDialogBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
+                                            }
+                                        });
+                                        alertDialogBuilder.setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
                                             }
                                         });
                                         alertDialogBuilder.setCancelable(false);
@@ -231,13 +247,13 @@ public class RegistrationActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
                             Log.d("MY_APP" , "-------------json fail korse---------");
+                            Log.d("MY_APP" , t.getMessage());
                             progressDialog.dismiss();
                         }
 
                     });
 
-                    Log.d("MY_APP" , "sggsfgsdfg : "+ staus_code );
-
+                    Log.d("MY_APP" , "status code : "+ staus_code );
 
                 }
 

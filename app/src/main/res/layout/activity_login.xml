@@ -109,11 +109,10 @@
             </LinearLayout>
 
             <TextView
-                android:visibility="gone"
-                android:id="@+id/no_account"
+                android:id="@+id/new_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Haven't yet registered , Register Now !"
+                android:text="Forgot password , Change Now !"
                 android:textColor="@color/no_color"
                 android:fontFamily="sans-serif-black"
                 android:gravity="center"

@@ -49,4 +49,12 @@ public interface API {
     Call<ResponseBody> attendanceReport(
             @Field("rfid") @NonNull String id
     );
+    @NonNull
+    @FormUrlEncoded
+    @POST("attendanceReport")
+    Call<ResponseBody> forgotPassowrd(
+            @Field("rfid") @NonNull String id,
+            @Field("verification_code") @NonNull String code,
+            @Field("password") @NonNull String pass
+    );
 }

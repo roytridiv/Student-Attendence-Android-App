@@ -15,6 +15,8 @@
     <string name="pref_login_status">com.abc.preference_login_status</string>
     <string name="pref_user_email">com.abc.preference_user_name</string>
     <string name="title_activity_result">Result</string>
+    <string name="forgot_pass">Change Your Password</string>
+    <string name="ver_code">Enter Verification code</string>
 
     <string name="default_notification_channel_id">HAJIRA_NOTIFICATION_CHANNEL</string>
     <string name="default_notification_channel_name">HAJIRA_NOTIFICATION</string>

@@ -7,8 +7,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 class RetrofitClient {
 
-    private static  final String BASE_URL = "https://tridivroy.xyz/smatd/v1/public/api/";
+//    private static  final String BASE_URL = "http://tridivroy.xyz/smatd/v1/public/api/";
 
+    private static final String BASE_URL = "https://smatd.tridivroy.xyz/v1/public/api/" ;
     private static RetrofitClient mInstance;
 
     private Retrofit retrofit;
