@@ -73,8 +73,6 @@ Button logout_but ;
         Intent intent = getIntent();
         rfid = intent.getStringExtra("rfid");
 
-
-
         attendenceReport = findViewById(R.id.attendance_report);
         classRoutine = findViewById(R.id.class_routine);
         termResult = findViewById(R.id.term_result);
