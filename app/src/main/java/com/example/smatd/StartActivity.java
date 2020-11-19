@@ -61,7 +61,6 @@ public class StartActivity extends AppCompatActivity {
                         .getApi()
                         .check(input_rfid, input_mobile);
 
-
                 call.enqueue(new Callback<ResponseBody>() {
                     @SuppressLint("LogConditional")
                     @Override
